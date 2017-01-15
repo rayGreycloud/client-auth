@@ -15,6 +15,7 @@ class Header extends Component {
     } else {
       // Show link to signin or signup
       // Using array to avoid using <div> wrapper
+      // Adding keys to eliminate error
       return [
         <li className="nav-item" key={2}>
           <Link className="nav-link" to="/signin" >Sign In</Link>
