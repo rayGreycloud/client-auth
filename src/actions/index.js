@@ -3,7 +3,8 @@ import { browserHistory } from 'react-router';
 import {
   AUTH_USER,
   UNAUTH_USER,
-  AUTH_ERROR
+  AUTH_ERROR,
+  FETCH_MESSAGE
 } from './types';
 // API server url
 const ROOT_URL = 'http://localhost:3090';
@@ -56,13 +57,30 @@ export function signoutUser() {
   return { type: UNAUTH_USER };
 }
 
+// Redux Thunk Version
 export function fetchMessage() {
   return function(dispatch) {
     axios.get(ROOT_URL, {
       headers: { authorization: localStorage.getItem('token') }
     })
       .then(response => {
-        console.log(response);
+        dispatch({
+          type: FETCH_MESSAGE,
+          payload: response.data.message
+        });
       });
   }
 }
+
+// Redux Promise Version
+// More readable than Redux Thunk (Says Stephen Grider)
+// export function fetchMessage() {
+//   const request = axios.get(ROOT_URL, {
+//     headers: { authorization: localStorage.getItem('token') }
+//   });
+//
+//   return {
+//     type: FETCH_MESSAGE,
+//     payload: request
+//   };
+// }
